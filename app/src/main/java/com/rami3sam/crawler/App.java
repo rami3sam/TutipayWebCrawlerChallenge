@@ -21,6 +21,7 @@ public class App {
         int i = 0;
         for (Element anchorTag : anchorTags){
             links[i] = anchorTag.attr("href");
+            i++;
         }
 
         return links;
@@ -31,6 +32,8 @@ public class App {
 
     public static void main(String[] args)  {
         String[] links  = getPageLinks(BASE_URL);
-        System.out.println(links[0]);
+        for (String link : links){
+            System.out.println(link);
+        }
     }
 }
