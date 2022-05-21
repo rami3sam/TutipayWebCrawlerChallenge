@@ -7,13 +7,30 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import java.io.IOException;
 
 public class App {
     static String BASE_URL = "https://monzo.com";
 
-    public static void main(String[] args) throws IOException {
-        Document document = Jsoup.connect(BASE_URL).get();
-        System.out.println(document.title());
+    public static String[] getPageLinks(String pageURL)  {
+        try{
+        Document document = Jsoup.connect(pageURL).get();
+        Elements anchorTags = document.getElementsByTag("a");
+
+        String[] links = new String[anchorTags.size()];
+
+        int i = 0;
+        for (Element anchorTag : anchorTags){
+            links[i] = anchorTag.attr("href");
+        }
+
+        return links;
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    public static void main(String[] args)  {
+        String[] links  = getPageLinks(BASE_URL);
+        System.out.println(links[0]);
     }
 }
