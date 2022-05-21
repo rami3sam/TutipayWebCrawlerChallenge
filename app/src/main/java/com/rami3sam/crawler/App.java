@@ -7,25 +7,40 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import java.net.URL;
+import java.io.IOException;
 
 public class App {
     static String BASE_URL = "https://monzo.com";
 
     public static String[] getPageLinks(String pageURL)  {
         try{
+        
+        URL pageURLObject = new URL(pageURL);
+        
         Document document = Jsoup.connect(pageURL).get();
         Elements anchorTags = document.getElementsByTag("a");
-
+        
         String[] links = new String[anchorTags.size()];
 
         int i = 0;
         for (Element anchorTag : anchorTags){
-            links[i] = anchorTag.attr("href");
+            String tempURL = anchorTag.attr("href");
+            if (tempURL.startsWith("/")){
+                // in case the url is a relative url add the current pages host as a prefix
+                tempURL = pageURLObject.getAuthority() + tempURL;
+            }else if(tempURL.startsWith("#")){
+                //if the url is a fragment then it's the same page and not a unique one
+                continue;
+            }
+
+            links[i] = tempURL;
             i++;
         }
-
+        
         return links;
-        }catch(Exception e){
+        }catch(IOException e){
+            e.printStackTrace(System.err);
             return null;
         }
     }
