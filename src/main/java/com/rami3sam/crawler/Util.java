@@ -18,67 +18,77 @@ import java.util.regex.Pattern;
 
 public class Util {
 
-
+    static Pattern pattern = Pattern.compile("[a-z+-.]:", Pattern.CASE_INSENSITIVE);
     public static ArrayList<String> getPageLinks(String pageURL) {
         try {
 
             URI pageURLObject = new URI(pageURL);
-
             Document document = Jsoup.connect(pageURL).get();
             Elements anchorTags = document.getElementsByTag("a");
 
             ArrayList<String> links = new ArrayList<>();
 
             for (Element anchorTag : anchorTags) {
-                String tempURL = anchorTag.attr("href");
-
-                Pattern pattern = Pattern.compile("[a-z+-.]:", Pattern.CASE_INSENSITIVE);
-                if (!pattern.matcher(tempURL).find()) {
-                    // in case the url is a relative url add the current pages host as a prefix
-
-                    // if it is just a fragment or query add current pages path
-                    if (tempURL.startsWith("#") || tempURL.startsWith("?")) {
-                        tempURL = pageURLObject.getPath() + tempURL;
-                    } else if (tempURL.startsWith("/")) {
-                        tempURL = tempURL;
-                    } else {
-                        URI parent = pageURLObject.getPath().endsWith("/") ? pageURLObject.resolve("..") : pageURLObject.resolve(".");
-                        tempURL = parent.getPath() + tempURL;
-                    }
-                    tempURL = pageURLObject.getScheme() + "://" + pageURLObject.getAuthority() + tempURL;
-
-                }
+                String scrapedURL = anchorTag.attr("href");
+                scrapedURL = rebaseIfRelativeUrl(pageURLObject, scrapedURL);
 
                 // check if the URL is well-formed if it is, proceed to add it to the list else skip it
                 URL url;
                 try {
-                    url = new URL(tempURL);
+                    url = new URL(scrapedURL);
                 } catch (MalformedURLException e) {
                     //e.printStackTrace();
                     continue;
                 }
 
                 //Strip the fragment from the url to get rid of duplicates
-                String urlString = url.getProtocol() + "://" + url.getAuthority() + url.getFile();
-                String protocol = url.getProtocol();
+                String urlString = stripUrlFragment(url);
+
 
                 // only add http and https links since only them can be crawled by this crawler
-                if (protocol.equalsIgnoreCase("http") || protocol.equalsIgnoreCase("https")) {
+                if (checkForCrawlableURLScheme(url)) {
                     links.add(urlString);
                 }
             }
 
             return links;
 
-            //handle the exception of being given a malformed url
+            //handle the exception of the function being given a malformed url
         } catch (URISyntaxException e) {
             e.printStackTrace(System.err);
             return null;
-            // handle the exception of not being able to start the connection
+            // handle the exception of the function not being able to start the connection
         } catch (IOException e) {
             e.printStackTrace(System.err);
             return null;
         }
+    }
+
+    private static boolean checkForCrawlableURLScheme(URL url) {
+        String protocol = url.getProtocol();
+        return protocol.equalsIgnoreCase("http") || protocol.equalsIgnoreCase("https");
+    }
+
+    private static String stripUrlFragment(URL url) {
+        return url.getProtocol() + "://" + url.getAuthority() + url.getFile();
+    }
+
+    private static String rebaseIfRelativeUrl(URI baseURL, String relativeURL) {
+        if (!Util.pattern.matcher(relativeURL).find()) {
+            // in case the url is a relative url add the current pages host as a prefix
+
+            // if it is just a fragment or query add current pages path
+            if (relativeURL.startsWith("#") || relativeURL.startsWith("?")) {
+                relativeURL = baseURL.getPath() + relativeURL;
+            } else if (!relativeURL.startsWith("/")){
+                //this is for urls relative to the parent directory
+                URI parent = baseURL.getPath().endsWith("/") ? baseURL.resolve("..") : baseURL.resolve(".");
+                relativeURL = parent.getPath() + relativeURL;
+            }
+            relativeURL = baseURL.getScheme() + "://" + baseURL.getAuthority() + relativeURL;
+
+        }
+        return relativeURL;
     }
 
 }
