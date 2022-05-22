@@ -66,11 +66,5 @@ public class Util {
             return null;
         }
     }
-
-    public static void main(String[] args) {
-        ArrayList<String> links = getPageLinks(BASE_URL);
-        for (String link : links) {
-            System.out.println(link);
-        }
-    }
+    
 }
