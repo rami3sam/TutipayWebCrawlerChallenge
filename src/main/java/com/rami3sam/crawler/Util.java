@@ -10,41 +10,46 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class Util {
-    static String BASE_URL = "https://monzo.com";
+
 
     public static ArrayList<String> getPageLinks(String pageURL) {
         try {
 
-            URL pageURLObject = new URL(pageURL);
+            URI pageURLObject = new URI(pageURL);
 
             Document document = Jsoup.connect(pageURL).get();
             Elements anchorTags = document.getElementsByTag("a");
 
-            ArrayList<String> links = new ArrayList<String>();
+            ArrayList<String> links = new ArrayList<>();
 
             for (Element anchorTag : anchorTags) {
                 String tempURL = anchorTag.attr("href");
-                if (!tempURL.startsWith("http://") && !tempURL.startsWith("https://")) {
+
+                Pattern pattern = Pattern.compile("[a-z+-.]:", Pattern.CASE_INSENSITIVE);
+                if (!pattern.matcher(tempURL).find()) {
                     // in case the url is a relative url add the current pages host as a prefix
 
                     // if it is just a fragment or query add current pages path
                     if (tempURL.startsWith("#") || tempURL.startsWith("?")) {
-                        tempURL = pageURLObject.getFile() + tempURL;
+                        tempURL = pageURLObject.getPath() + tempURL;
+                    } else if (tempURL.startsWith("/")) {
+                        tempURL = tempURL;
+                    } else {
+                        URI parent = pageURLObject.getPath().endsWith("/") ? pageURLObject.resolve("..") : pageURLObject.resolve(".");
+                        tempURL = parent.getPath() + tempURL;
                     }
-
-
-                    if (!tempURL.startsWith("/")) {
-                        tempURL = "/" + tempURL;
-                    }
-                    tempURL = pageURLObject.getProtocol() + "://" + pageURLObject.getAuthority() + tempURL;
+                    tempURL = pageURLObject.getScheme() + "://" + pageURLObject.getAuthority() + tempURL;
 
                 }
 
-                // check if the URL is well formed if it is proceed to add it to the list else skip it
+                // check if the URL is well-formed if it is, proceed to add it to the list else skip it
                 URL url;
                 try {
                     url = new URL(tempURL);
@@ -55,16 +60,25 @@ public class Util {
 
                 //Strip the fragment from the url to get rid of duplicates
                 String urlString = url.getProtocol() + "://" + url.getAuthority() + url.getFile();
-                links.add(urlString);
+                String protocol = url.getProtocol();
 
+                // only add http and https links since only them can be crawled by this crawler
+                if (protocol.equalsIgnoreCase("http") || protocol.equalsIgnoreCase("https")) {
+                    links.add(urlString);
+                }
             }
 
             return links;
 
+            //handle the exception of being given a malformed url
+        } catch (URISyntaxException e) {
+            e.printStackTrace(System.err);
+            return null;
+            // handle the exception of not being able to start the connection
         } catch (IOException e) {
             e.printStackTrace(System.err);
             return null;
         }
     }
-    
+
 }

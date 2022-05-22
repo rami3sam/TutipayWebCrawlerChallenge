@@ -6,7 +6,7 @@ import java.net.URI;
 import java.util.ArrayList;
 
 public class Main {
-    static String BASE_URL = "http://localhost:8000/test.html";
+    static String BASE_URL = "http://localhost:8000/dir/test.html";
     static int  DEPTH_LIMIT = 100;
     public static void main(String[] args) {
         ArrayList<String> links = Util.getPageLinks(BASE_URL);
