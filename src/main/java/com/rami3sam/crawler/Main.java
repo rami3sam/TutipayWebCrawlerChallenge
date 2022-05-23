@@ -3,6 +3,8 @@
  */
 package com.rami3sam.crawler;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -18,8 +20,15 @@ public class Main {
     static volatile HashSet crawledURLs = new HashSet();
     static volatile ArrayList<String> newURLs = new ArrayList<>();
 
-    public static void main(String[] args) throws InterruptedException {
+    static FileWriter outputFileWriter = null;
+    public static void main(String[] args) throws IOException {
         newURLs.add(SEED_URL);
+
+        try {
+            outputFileWriter = new FileWriter("links.txt");
+        }catch (IOException e){
+            System.err.println("Couldn't open links.txt for output writing");
+        }
 
         ExecutorService executor = Executors.newFixedThreadPool(5);//creating a pool of 5 threads
         for (int i = 0; i < CRAWL_LIMIT; i++) {
@@ -41,6 +50,9 @@ public class Main {
         executor.shutdown();
         while (!executor.isTerminated()) {
         }
+
+
+        outputFileWriter.close();
 
         System.out.println("************\n");
 

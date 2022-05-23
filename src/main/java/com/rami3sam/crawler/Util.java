@@ -26,6 +26,9 @@ public class Util {
 
             URI pageURI = new URI(pageURL);
             Document document = Jsoup.connect(pageURL).get();
+
+            Main.outputFileWriter.write(pageURL+"  -------------->  "+ document.title()+"\n");
+
             Elements anchorTags = document.getElementsByTag("a");
 
             ArrayList<String> links = new ArrayList<>();
