@@ -18,10 +18,11 @@ import java.util.regex.Pattern;
 public class Util {
 
     static Pattern urlWithSchemeRegexp = Pattern.compile("[a-z+-.]+:.*", Pattern.CASE_INSENSITIVE);
+
     public static ArrayList<String> getPageLinks(String pageURL) {
         try {
 
-            URI pageURLObject = new URI(pageURL);
+            URI pageURI = new URI(pageURL);
             Document document = Jsoup.connect(pageURL).get();
             Elements anchorTags = document.getElementsByTag("a");
 
@@ -29,74 +30,61 @@ public class Util {
 
             for (Element anchorTag : anchorTags) {
                 String scrapedURL = anchorTag.attr("href");
-                scrapedURL = rebaseIfRelativeUrl(pageURLObject, scrapedURL);
 
-                // check if the URL is well-formed if it is, proceed to add it to the list else skip it
-                URL url;
                 try {
-                    url = new URL(scrapedURL);
-                } catch (MalformedURLException e) {
-                    //e.printStackTrace();
-                    continue;
+                    URI scrapedURI = null;
+                    if (scrapedURL.startsWith("//")) {
+                        // deal with absent scheme
+                        String scrapedURLWithoutSlashes = scrapedURL.replaceFirst("/+", "");
+                        scrapedURLWithoutSlashes = pageURI.getScheme() + "://" + scrapedURLWithoutSlashes;
+                        scrapedURI = new URI(scrapedURLWithoutSlashes);
+                    } else if (scrapedURL.startsWith("/")) {
+                        // deal with url relative to root
+                        scrapedURI = new URI(pageURI.getScheme(), pageURI.getAuthority(), scrapedURL, "", "");
+                    } else if (scrapedURL.startsWith("?")) {
+                        // deal with url containing only the query
+                        scrapedURI = new URI(pageURI.getScheme(), pageURI.getAuthority(), pageURI.getPath(), scrapedURL, "");
+                    } else if (scrapedURL.startsWith("#")) {
+                        // deal with url containing only a fragment
+                        scrapedURI = new URI(pageURI.getScheme(), pageURI.getAuthority(), pageURI.getPath(), "", scrapedURL);
+                    } else if (scrapedURL.equals("")) {
+                        // deal with an empty url
+                        scrapedURI = pageURI;
+                    } else if (!urlWithSchemeRegexp.matcher(scrapedURL).find()) {
+                        scrapedURI = pageURI.getPath().endsWith("/") ? pageURI.resolve("../"+scrapedURL) : pageURI.resolve("./"+scrapedURL);
+                    } else {
+                        scrapedURI = new URI(scrapedURL);
+                    }
+
+                    if (scrapedURI != null && checkForCrawlableURLScheme(scrapedURI) ) {
+                        String query =  (scrapedURI.getQuery() != null) ? scrapedURI.getQuery() : "";
+                        String url = scrapedURI.getScheme() + "://" + scrapedURI.getAuthority() + scrapedURI.getPath() + query;
+                        links.add(url);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-                //Strip the fragment from the url to get rid of duplicates
-                String urlString = stripUrlFragmentAndNormalize(url);
 
-                // only add http and https links since only them can be crawled by this crawler
-                if (checkForCrawlableURLScheme(url)) {
-                    links.add(urlString);
-                }
             }
 
             return links;
 
             //handle the exception of the function being given a malformed url
         } catch (URISyntaxException e) {
-            //e.printStackTrace(System.err);
+            e.printStackTrace(System.err);
             return null;
             // handle the exception of the function not being able to start the connection
         } catch (Exception e) {
-            //e.printStackTrace(System.err);
+            e.printStackTrace(System.err);
             return null;
         }
     }
 
-    private static boolean checkForCrawlableURLScheme(URL url) {
-        String protocol = url.getProtocol();
+    private static boolean checkForCrawlableURLScheme(URI uri) {
+        String protocol = uri.getScheme();
         return protocol.equalsIgnoreCase("http") || protocol.equalsIgnoreCase("https");
-    }
-
-    private static String stripUrlFragmentAndNormalize(URL url) {
-        String retuUrl = url.getProtocol().toLowerCase() + "://" + url.getAuthority().toLowerCase() + url.getFile();
-
-        // to get red of duplicates https://rami.com/page and https://rami.com/page/
-        if (retuUrl.endsWith("/")){
-            retuUrl = retuUrl.substring(0,retuUrl.length() - 1);
-        }
-        return retuUrl;
-    }
-
-    private static String rebaseIfRelativeUrl(URI baseURL, String relativeURL) {
-        if (relativeURL.startsWith("//")){
-            relativeURL = baseURL.getScheme() +  ":"+ relativeURL;
-        }
-
-        if (!Util.urlWithSchemeRegexp.matcher(relativeURL).find()) {
-            // in case the url is a relative url add the current pages host as a prefix
-
-            // if it is just a fragment or query add current pages path
-            if (relativeURL.startsWith("#") || relativeURL.startsWith("?")) {
-                relativeURL = baseURL.getPath() + relativeURL;
-            } else if (!relativeURL.startsWith("/")){
-                //this is for urls relative to the parent directory
-                URI parent = baseURL.getPath().endsWith("/") ? baseURL.resolve("..") : baseURL.resolve(".");
-                relativeURL = parent.getPath() + relativeURL;
-            }
-            relativeURL = baseURL.getScheme() + "://" + baseURL.getAuthority() + relativeURL;
-
-        }
-        return relativeURL;
     }
 
     public static boolean isOneSubdomainOfTheOther(String a, String b) {

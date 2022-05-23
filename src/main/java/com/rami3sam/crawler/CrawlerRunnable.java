@@ -1,7 +1,6 @@
 package com.rami3sam.crawler;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class CrawlerRunnable implements Runnable {
     String crawlURL;
@@ -11,7 +10,7 @@ public class CrawlerRunnable implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void  run() {
         Main.crawledURLs.add(crawlURL);
         String output = "";
         output += "---------------------\n";
@@ -21,24 +20,17 @@ public class CrawlerRunnable implements Runnable {
         ArrayList<String> filteredLinks = new ArrayList<>();
 
         if (links != null) {
-            links.removeAll(Main.crawledURLs);
-            links.removeAll(Main.newURLs);
-
             for (String link : links) {
-                if (Util.isOneSubdomainOfTheOther(link, Main.SEED_URL)) {
-
-                    filteredLinks.add(link);
+                boolean cond = Util.isOneSubdomainOfTheOther(link, Main.SEED_URL);
+                if (cond) {
+                    if (!(Main.newURLs.contains(link) || Main.crawledURLs.contains(link))) {
+                        output += link + "\n";
+                        Main.newURLs.add(link);
+                    }
                 }
             }
 
-            HashSet<String> uniqueLinks = new HashSet<>();
-            uniqueLinks.addAll(filteredLinks);
-            for (String link : uniqueLinks) {
-                output += link + "\n";
-            }
-            Main.newURLs.addAll(filteredLinks);
         }
-
 
         output += "---------------------\n";
         System.out.println(output);

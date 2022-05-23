@@ -9,8 +9,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
-    //static String SEED_URL = "http://localhost:8000/dir/test.html";
-    static String SEED_URL = "http://monzo.com";
+    static String SEED_URL = "http://localhost:8000/dir/test.html";
+    //static String SEED_URL = "http://monzo.com";
 
     static String DOMAIN = "opera.com";
     static int CRAWL_LIMIT = 100;
