@@ -28,6 +28,7 @@ public class Util {
             Document document = Jsoup.connect(pageURL).get();
 
             Main.outputFileWriter.write(pageURL+"  -------------->  "+ document.title()+"\n");
+            Main.outputFileWriter.flush();
 
             Elements anchorTags = document.getElementsByTag("a");
 

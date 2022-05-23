@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -21,21 +20,27 @@ public class Main {
     static volatile ArrayList<String> newURLs = new ArrayList<>();
 
     static FileWriter outputFileWriter = null;
+
     public static void main(String[] args) throws IOException {
         newURLs.add(SEED_URL);
 
         try {
             outputFileWriter = new FileWriter("links.txt");
-        }catch (IOException e){
+        } catch (IOException e) {
             System.err.println("Couldn't open links.txt for output writing");
         }
 
-        ExecutorService executor = Executors.newFixedThreadPool(5);//creating a pool of 5 threads
-        for (int i = 0; i < CRAWL_LIMIT; i++) {
+        ExecutorService executor = Executors.newFixedThreadPool(35);//creating a pool of 5 threads
+        for (int i = 0; true; i++) {
             String currentURL;
 
+            if(i > 0 && executor.isTerminated()){
+                break;
+            }
             // if there is no new urls in netURLS wait for a new one
-            while (newURLs.size() <= i ) {}
+            while (newURLs.size() <= i ) {
+            }
+
 
             currentURL = newURLs.get(i);
 
