@@ -46,7 +46,7 @@ public class Main {
             // if there is no new urls in netURLS wait for a new one
             int time = (int) System.currentTimeMillis();
             while (newURLs.size() <= i + 1) {
-                if ((int) System.currentTimeMillis() - time >= 5000) {
+                if ((int) System.currentTimeMillis() - time >= 30000) {
                     running = false;
                     break;
                 }
