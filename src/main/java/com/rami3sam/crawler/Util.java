@@ -78,7 +78,7 @@ public class Util {
                 // deal with an empty url
                 scrapedURI = pageURI;
             } else if (!urlWithSchemeRegexp.matcher(scrapedURL).find()) {
-                scrapedURI = pageURI.getPath().endsWith("/") ? pageURI.resolve("../" + scrapedURL) : pageURI.resolve("./" + scrapedURL);
+                scrapedURI = !pageURI.getPath().endsWith("/") ? pageURI.resolve("../" + scrapedURL) : pageURI.resolve( scrapedURL);
             } else {
                 scrapedURI = new URI(scrapedURL);
             }
