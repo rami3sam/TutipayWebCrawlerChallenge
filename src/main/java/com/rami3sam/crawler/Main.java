@@ -7,12 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class Main {
     //static String SEED_URL = "http://localhost:8000/dir/test.html";
-    static String SEED_URL = "http://monzo.com";
+    static String SEED_URL = "https://monzo.com";
 
     static String DOMAIN = "opera.com";
     static int CRAWL_LIMIT = 100;
@@ -30,20 +30,12 @@ public class Main {
             System.err.println("Couldn't open links.txt for output writing");
         }
 
-        ExecutorService executor = Executors.newFixedThreadPool(10);
-        for (int i = 0; true; i++) {
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
+        boolean running = true;
+        for (int i = 0; running; i++) {
             String currentURL;
 
-            if(i > 0 && executor.isTerminated()){
-                break;
-            }
-            // if there is no new urls in netURLS wait for a new one
-            while (newURLs.size() <= i ) {
-            }
-
-
             currentURL = newURLs.get(i);
-
 
             if (!crawledURLs.contains(currentURL)) {
                 Main.crawledURLs.add(currentURL);
@@ -51,14 +43,23 @@ public class Main {
                 executor.execute(worker);//calling execute method of ExecutorService
             }
 
+            // if there is no new urls in netURLS wait for a new one
+            int time = (int) System.currentTimeMillis();
+            while (newURLs.size() <= i + 1) {
+                if ((int) System.currentTimeMillis() - time >= 5000) {
+                    running = false;
+                    break;
+                }
+            }
         }
+        System.out.println("Closing ThreadPoolExecutor");
         executor.shutdown();
-        while (!executor.isTerminated()) {
-        }
 
+        while (!executor.isTerminated()) {
+
+        }
 
         outputFileWriter.close();
-
         System.out.println("************\n");
 
     }

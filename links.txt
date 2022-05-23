@@ -1,49 +1,107 @@
-http://monzo.com  -------------->  Monzo – Online Banking Made Easy | Open An Account Online
-http://monzo.com/features/joint-accounts  -------------->  Monzo – Joint account - Open one today in minutes
-http://monzo.com/features/16-plus  -------------->  Monzo – Monzo for 16-17 year olds
-http://monzo.com/features/savings  -------------->  Monzo – Find out how you can save more with us
-http://monzo.com/i/monzo-plus  -------------->  Monzo Plus
-http://monzo.com/i/switch  -------------->  Switch to Monzo
-http://monzo.com/i/business  -------------->  Open a Business Bank Account Online | Monzo
-http://monzo.com/i/refer-a-friend  -------------->  Refer a Friend | Invite friends to Monzo
-http://monzo.com/i/savingwithmonzo  -------------->  Saving With Monzo
-http://monzo.com/i/monzo-premium  -------------->  Monzo Premium
-http://monzo.com/i/current-account  -------------->  Current Accounts | Open a Bank Account Online | Monzo
-http://monzo.com/isa  -------------->  Monzo – ISAs - Open a Cash ISA today
-http://monzo.com/flex  -------------->  Monzo Flex | A Better Way To Buy Now, Pay Later In The UK | Monzo
-http://monzo.com/features/travel  -------------->  Monzo – Travelling with Monzo — Find out more about paying abroad with your Monzo card, including exchange rate information
-http://monzo.com/blog/2019/11/12/what-are-unsecured-loans  -------------->  Unsecured loans - what are they and how do they work?
-http://monzo.com/i/overdrafts  -------------->  Overdrafts - Get an arranged overdraft with Monzo
-http://monzo.com/features/energy-switching  -------------->  Monzo – Energy Switching with Monzo
-http://monzo.com/i/loans  -------------->  Loans - Get a low rate personal loan from Monzo Bank
-http://monzo.com/i/pots  -------------->  Pots | Separate your money to suit your life with Monzo Pots
-http://monzo.com/i/shared-tabs-more  -------------->  Shared Tabs - Monzo Bank
-http://monzo.com/service-quality-results/#great-britain  -------------->  Monzo – Independent service quality survey results
-http://monzo.com/service-quality-results/#northern-ireland  -------------->  Monzo – Independent service quality survey results
-http://monzo.com/help  -------------->  Monzo Help
-http://monzo.com/i/security  -------------->  Stay safe with Monzo
-http://monzo.com/us  -------------->  Monzo
-http://monzo.com/press  -------------->  Monzo –
-https://community.monzo.com/c/making-monzo  -------------->  Making Monzo - Monzo Community
-http://monzo.com/blog  -------------->  Monzo Blog
-http://monzo.com/careers  -------------->  Monzo – Careers at Monzo
-http://monzo.com/about  -------------->  Monzo – About Monzo
-http://monzo.com/i/our-social-programme  -------------->  Our social programme
-https://web.monzo.com  -------------->  Monzo – Online Banking
-http://monzo.com/i/helping-everyone-belong-at-monzo  -------------->  Helping everyone belong at Monzo
-http://monzo.com/i/supporting-all-our-customers  -------------->  Supporting all our customers
-http://monzo.com/investor-information  -------------->  Monzo – Investor Information
-http://monzo.com/i/coronavirus-faq  -------------->  Coronavirus FAQ
-http://monzo.com/tone-of-voice  -------------->  Monzo – Tone of Voice
-http://monzo.com/faq  -------------->  Monzo – Frequently asked questions
-http://monzo.com/i/accessibility  -------------->  Accessibility
-http://monzo.com/i/fraud  -------------->  Keep your money safe from fraudsters
-http://monzo.com/legal/terms-and-conditions  -------------->  Terms & Conditions
-http://monzo.com/legal/privacy-notice  -------------->  Customer Privacy Notice
-http://monzo.com/legal/fscs-information  -------------->  Financial Services Compensation Scheme Information Sheet
-http://monzo.com/legal/cookie-notice  -------------->  Cookie Notice
-http://monzo.com/legal/browser-support-policy  -------------->  Browser Support Policy
-http://monzo.com/legal/mobile-operating-system-support-policy  -------------->  Mobile Operating System Support Policy
+https://monzo.com  -------------->  Monzo – Online Banking Made Easy | Open An Account Online
+https://monzo.com/features/joint-accounts  -------------->  Monzo – Joint account - Open one today in minutes
+https://monzo.com/features/16-plus  -------------->  Monzo – Monzo for 16-17 year olds
+https://monzo.com/i/current-account  -------------->  Current Accounts | Open a Bank Account Online | Monzo
 https://monzo.com/i/switch  -------------->  Switch to Monzo
+https://monzo.com/features/savings  -------------->  Monzo – Find out how you can save more with us
+https://monzo.com/i/monzo-premium  -------------->  Monzo Premium
+https://monzo.com/i/refer-a-friend  -------------->  Refer a Friend | Invite friends to Monzo
+https://monzo.com/i/business  -------------->  Open a Business Bank Account Online | Monzo
+https://monzo.com/i/monzo-plus  -------------->  Monzo Plus
+https://monzo.com/i/savingwithmonzo  -------------->  Saving With Monzo
+https://monzo.com/isa  -------------->  Monzo – ISAs - Open a Cash ISA today
+https://monzo.com/flex  -------------->  Monzo Flex | A Better Way To Buy Now, Pay Later In The UK | Monzo
 https://monzo.com/features/travel  -------------->  Monzo – Travelling with Monzo — Find out more about paying abroad with your Monzo card, including exchange rate information
-http://monzo.com/service-information  -------------->  Monzo – Performance of our App and Open Banking Services
+https://monzo.com/blog/2019/11/12/what-are-unsecured-loans  -------------->  Unsecured loans - what are they and how do they work?
+https://monzo.com/features/energy-switching  -------------->  Monzo – Energy Switching with Monzo
+https://monzo.com/i/overdrafts  -------------->  Overdrafts - Get an arranged overdraft with Monzo
+https://monzo.com/i/loans  -------------->  Loans - Get a low rate personal loan from Monzo Bank
+https://monzo.com/i/pots  -------------->  Pots | Separate your money to suit your life with Monzo Pots
+https://monzo.com/i/shared-tabs-more  -------------->  Shared Tabs - Monzo Bank
+https://monzo.com/help  -------------->  Monzo Help
+https://monzo.com/service-quality-results/#great-britain  -------------->  Monzo – Independent service quality survey results
+https://monzo.com/service-quality-results/#northern-ireland  -------------->  Monzo – Independent service quality survey results
+https://monzo.com/about  -------------->  Monzo – About Monzo
+https://monzo.com/us  -------------->  Monzo
+https://monzo.com/press  -------------->  Monzo –
+https://monzo.com/blog  -------------->  Monzo Blog
+https://monzo.com/i/security  -------------->  Stay safe with Monzo
+https://monzo.com/careers  -------------->  Monzo – Careers at Monzo
+https://monzo.com/i/our-social-programme  -------------->  Our social programme
+https://monzo.com/investor-information  -------------->  Monzo – Investor Information
+https://monzo.com/i/accessibility  -------------->  Accessibility
+https://web.monzo.com  -------------->  Monzo – Online Banking
+https://community.monzo.com/c/making-monzo  -------------->  Making Monzo - Monzo Community
+https://monzo.com/i/helping-everyone-belong-at-monzo  -------------->  Helping everyone belong at Monzo
+https://monzo.com/i/supporting-all-our-customers  -------------->  Supporting all our customers
+https://monzo.com/tone-of-voice  -------------->  Monzo – Tone of Voice
+https://monzo.com/i/coronavirus-faq  -------------->  Coronavirus FAQ
+https://monzo.com/i/fraud  -------------->  Keep your money safe from fraudsters
+https://monzo.com/faq  -------------->  Monzo – Frequently asked questions
+https://monzo.com/legal/terms-and-conditions  -------------->  Terms & Conditions
+https://monzo.com/legal/fscs-information  -------------->  Financial Services Compensation Scheme Information Sheet
+https://monzo.com/legal/cookie-notice  -------------->  Cookie Notice
+https://monzo.com/legal/browser-support-policy  -------------->  Browser Support Policy
+https://monzo.com/legal/privacy-notice  -------------->  Customer Privacy Notice
+https://monzo.com/legal/mobile-operating-system-support-policy  -------------->  Mobile Operating System Support Policy
+https://monzo.com/community/making-monzo  -------------->  Monzo – Online Banking Made Easy | Open An Account Online
+https://monzo.com/service-information  -------------->  Monzo – Performance of our App and Open Banking Services
+https://monzo.com/information-about-current-account-services  -------------->  Monzo – Information about our Personal Current Account Services
+https://monzo.com/help/travelling/fees-charges-abroad  -------------->  Monzo Help - Using your card abroad
+https://monzo.com/i/monzo-account  -------------->  Open a UK bank account for free with Monzo
+https://monzo.com/download  -------------->  Monzo – Download Monzo
+https://monzo.com/features/switch  -------------->  Switch to Monzo
+https://monzo.com/-deeplinks/create_pot/savings  -------------->  Create a Savings Pot
+https://monzo.com/blog/2020/10/20/how-we-value-monzo-premium  -------------->  How we value Monzo Premium
+https://monzo.com/i/coronavirus-update  -------------->  We're here to keep Monzo running and support you with your money
+https://monzo.com/i/coronavirus-and-your-insurance  -------------->  Coronavirus and your insurance with Monzo Premium
+https://monzo.com/i/monzo-premium/worldwide-family-travel-insurance  -------------->  Worldwide family travel insurance
+https://monzo.com/i/monzo-plus/patch  -------------->  Get a 15% Off Patch Plants Discount Code with Monzo Plus
+https://monzo.com/legal/premium/terms-and-conditions  -------------->  Monzo Premium Terms and Conditions
+https://monzo.com/-deeplinks/invite  -------------->  Invite
+https://monzo.com/i/monzo-plus/naked-wines  -------------->  Get a 50% Naked Wines discount code with Monzo Plus
+https://monzo.com/i/monzo-plus/fiit  -------------->  Get a 25% Off FiiT Promo Code with Monzo Plus
+https://monzo.com/i/business/eligibility/  -------------->  Monzo Business - Eligibility
+https://monzo.com/i/business/features  -------------->  Features of the Monzo Business accounts
+https://monzo.com/i/business/testimonials  -------------->  Monzo Business - Testimonials
+https://www.monzo.com/-deeplinks/paid  -------------->  Paid
+https://monzo.com/i/business/help  -------------->  Monzo Business - Help
+https://business.monzo.com  -------------->  Monzo - Web Banking
+https://monzo.com/-deeplinks/business_account_signup  -------------->  Open your Business Account
+https://monzo.com/i/business/sign-up-for-business  -------------->  Apply for Monzo Business
+https://monzo.com/i/business/get-paid  -------------->  Get paid, the easy way.
+https://monzo.com/i/business/features/tax-pots  -------------->  Monzo Business Features - Tax Pots
+https://monzo.com/legal/business-account-fscs-information  -------------->  Financial Services Compensation Scheme Information Sheet
+https://monzo.com/blog/lets-talk-business  -------------->  Let's Talk Business - Monzo Blog
+https://monzo.com/i/business/eligibility  -------------->  Monzo Business - Eligibility
+https://monzo.com/i/business/features/xero-offer  -------------->  Monzo Business Features - Xero free for 6 months
+https://monzo.com/legal/business-account-terms-and-conditions  -------------->  Terms and Conditions
+https://monzo.com/legal/business-account-privacy-notice  -------------->  Privacy Notice
+https://monzo.com/information-about-business-current-account-services  -------------->  Monzo – Information about our Business Current Account Services
+https://monzo.com/legal/plus/terms-and-conditions  -------------->  Monzo Plus Terms and Conditions
+https://monzo.com/blog/savings-account-guides  -------------->  Savings Account Guides - Monzo Blog
+https://monzo.com/-deeplinks/flex_start_application  -------------->  Monzo | Flex
+https://monzo.com/help/monzo-flex  -------------->  Getting started, editing instalments and more...
+https://monzo.com/help/overdrafts-loans  -------------->  Overdrafts, loans and credit scores
+https://monzo.com/blog/learn-how-to-save  -------------->  Learn How To Save - Monzo Blog
+https://monzo.com/help/travelling/fees  -------------->  Monzo Help - Understanding fees
+https://monzo.com/i/ecb-rates  -------------->  Monzo Exchange Rates
+https://monzo.com/blog/how-money-works  -------------->  How Money Works - Monzo Blog
+https://monzo.com/blog/2020/02/24/credit-scores  -------------->  Soon, you’ll be able to see your credit score in Monzo
+https://monzo.com/blog/2019/12/05/secured-loan  -------------->  What is a secured loan and how do you know if it's right for you?
+https://monzo.com/blog/2019/12/11/how-do-loans-work  -------------->  How do loans work?
+https://monzo.com/blog/how-to-get-a-loan-with-bad-credit  -------------->  Loans for bad credit - find out how to improve your chances
+https://monzo.com/-deeplinks/energy_switching_offer  -------------->  Energy Switching Offer
+https://community.monzo.com/c/monzo/travelling  -------------->  Travelling with Monzo - Monzo Community
+https://monzo.com/blog/2018/10/25/interest-explained  -------------->  The big guide to interest
+https://monzo.com/blog/2019/01/29/2019-features  -------------->  What we’ll build in 2019
+https://monzo.com/blog/authors/roxy-alexander  -------------->  Roxy Alexander - Monzo Blog
+https://monzo.com/-deeplinks/overdrafts  -------------->  Monzo | Overdrafts
+https://monzo.com/blog/2018/08/09/what-is-a-credit-score  -------------->  What is a credit score?
+https://monzo.com/i/loans/home-improvement-loans  -------------->  Home improvement loans - apply today with Monzo
+https://monzo.com/help/overdrafts-loans/unauthorised-overdrafts  -------------->  Monzo Help - Unarranged overdrafts
+https://monzo.com/blog/pots  -------------->  Pots - Monzo Blog
+https://monzo.com/help/opening-an-account  -------------->  Opening a Monzo Personal, Joint or Business Account
+https://monzo.com/help/app-help  -------------->  App settings, mobile payments, partnerships...
+https://monzo.com/help/budgeting-overdrafts-savings  -------------->  Opening pots, budgeting and saving
+https://monzo.com/help/account-and-profile  -------------->  Account number and sort code, limits, bank statement...
