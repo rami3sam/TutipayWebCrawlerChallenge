@@ -9,7 +9,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
-    static String SEED_URL = "http://localhost:8000/dir/test.html";
+    //static String SEED_URL = "http://localhost:8000/dir/test.html";
+    static String SEED_URL = "http://monzo.com";
+
+    static String DOMAIN = "opera.com";
     static int CRAWL_LIMIT = 100;
     static volatile HashSet crawledURLs = new HashSet();
     static volatile LinkedList<String> newURLs = new LinkedList<>();
@@ -28,10 +31,11 @@ public class Main {
             currentURL = newURLs.getFirst();
             newURLs.removeFirst();
 
+            if (!crawledURLs.contains(currentURL)) {
+                CrawlerRunnable worker = new CrawlerRunnable(currentURL);
+                executor.execute(worker);//calling execute method of ExecutorService
+            }
 
-            CrawlerRunnable worker = new CrawlerRunnable(currentURL);
-
-            executor.execute(worker);//calling execute method of ExecutorService
         }
         executor.shutdown();
         while (!executor.isTerminated()) {

@@ -8,7 +8,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class Util {
 
-    static Pattern urlWithSchemeRegexp = Pattern.compile("[a-z+-.]:.*", Pattern.CASE_INSENSITIVE);
+    static Pattern urlWithSchemeRegexp = Pattern.compile("[a-z+-.]+:.*", Pattern.CASE_INSENSITIVE);
     public static ArrayList<String> getPageLinks(String pageURL) {
         try {
 
@@ -42,7 +41,7 @@ public class Util {
                 }
 
                 //Strip the fragment from the url to get rid of duplicates
-                String urlString = stripUrlFragment(url);
+                String urlString = stripUrlFragmentAndNormalize(url);
 
                 // only add http and https links since only them can be crawled by this crawler
                 if (checkForCrawlableURLScheme(url)) {
@@ -68,11 +67,21 @@ public class Util {
         return protocol.equalsIgnoreCase("http") || protocol.equalsIgnoreCase("https");
     }
 
-    private static String stripUrlFragment(URL url) {
-        return url.getProtocol() + "://" + url.getAuthority() + url.getFile();
+    private static String stripUrlFragmentAndNormalize(URL url) {
+        String retuUrl = url.getProtocol().toLowerCase() + "://" + url.getAuthority().toLowerCase() + url.getFile();
+
+        // to get red of duplicates https://rami.com/page and https://rami.com/page/
+        if (retuUrl.endsWith("/")){
+            retuUrl = retuUrl.substring(0,retuUrl.length() - 1);
+        }
+        return retuUrl;
     }
 
     private static String rebaseIfRelativeUrl(URI baseURL, String relativeURL) {
+        if (relativeURL.startsWith("//")){
+            relativeURL = baseURL.getScheme() +  ":"+ relativeURL;
+        }
+
         if (!Util.urlWithSchemeRegexp.matcher(relativeURL).find()) {
             // in case the url is a relative url add the current pages host as a prefix
 
@@ -90,4 +99,61 @@ public class Util {
         return relativeURL;
     }
 
+    public static boolean isOneSubdomainOfTheOther(String a, String b) {
+
+        try {
+            URL first = new URL(a);
+            String firstHost = first.getHost();
+            firstHost = firstHost.startsWith("www.") ? firstHost.substring(4) : firstHost;
+
+            URL second = new URL(b);
+            String secondHost = second.getHost();
+            secondHost = secondHost.startsWith("www.") ? secondHost.substring(4) : secondHost;
+
+            /*
+             Test if one is a substring of the other
+             */
+            if (firstHost.contains(secondHost) || secondHost.contains(firstHost)) {
+
+                String[] firstPieces = firstHost.split("\\.");
+                String[] secondPieces = secondHost.split("\\.");
+
+                String[] longerHost = {""};
+                String[] shorterHost = {""};
+
+                if (firstPieces.length >= secondPieces.length) {
+                    longerHost = firstPieces;
+                    shorterHost = secondPieces;
+                } else {
+                    longerHost = secondPieces;
+                    shorterHost = firstPieces;
+                }
+                //int longLength = longURL.length;
+                int minLength = shorterHost.length;
+                int i = 1;
+
+                /*
+                 Compare from the tail of both host and work backwards
+                 */
+                while (minLength > 0) {
+                    String tail1 = longerHost[longerHost.length - i];
+                    String tail2 = shorterHost[shorterHost.length - i];
+
+                    if (tail1.equalsIgnoreCase(tail2)) {
+                        //move up one place to the left
+                        minLength--;
+                    } else {
+                        //domains do not match
+                        return false;
+                    }
+                    i++;
+                }
+                if (minLength == 0) //shorter host exhausted. Is a sub domain
+                    return true;
+            }
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }
