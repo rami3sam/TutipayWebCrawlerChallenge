@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 public class Util {
 
-    static Pattern pattern = Pattern.compile("[a-z+-.]:", Pattern.CASE_INSENSITIVE);
+    static Pattern urlWithSchemeRegexp = Pattern.compile("[a-z+-.]:.*", Pattern.CASE_INSENSITIVE);
     public static ArrayList<String> getPageLinks(String pageURL) {
         try {
 
@@ -44,7 +44,6 @@ public class Util {
                 //Strip the fragment from the url to get rid of duplicates
                 String urlString = stripUrlFragment(url);
 
-
                 // only add http and https links since only them can be crawled by this crawler
                 if (checkForCrawlableURLScheme(url)) {
                     links.add(urlString);
@@ -55,11 +54,11 @@ public class Util {
 
             //handle the exception of the function being given a malformed url
         } catch (URISyntaxException e) {
-            e.printStackTrace(System.err);
+            //e.printStackTrace(System.err);
             return null;
             // handle the exception of the function not being able to start the connection
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
+        } catch (Exception e) {
+            //e.printStackTrace(System.err);
             return null;
         }
     }
@@ -74,7 +73,7 @@ public class Util {
     }
 
     private static String rebaseIfRelativeUrl(URI baseURL, String relativeURL) {
-        if (!Util.pattern.matcher(relativeURL).find()) {
+        if (!Util.urlWithSchemeRegexp.matcher(relativeURL).find()) {
             // in case the url is a relative url add the current pages host as a prefix
 
             // if it is just a fragment or query add current pages path
