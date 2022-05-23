@@ -30,7 +30,7 @@ public class Main {
             System.err.println("Couldn't open links.txt for output writing");
         }
 
-        ExecutorService executor = Executors.newFixedThreadPool(35);//creating a pool of 5 threads
+        ExecutorService executor = Executors.newFixedThreadPool(10);
         for (int i = 0; true; i++) {
             String currentURL;
 

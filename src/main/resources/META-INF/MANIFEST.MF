@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: com.rami3sam.crawler.Main
+
