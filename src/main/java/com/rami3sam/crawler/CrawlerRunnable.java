@@ -11,7 +11,7 @@ public class CrawlerRunnable implements Runnable {
 
     @Override
     public void  run() {
-        Main.crawledURLs.add(crawlURL);
+
         String output = "";
         output += "---------------------\n";
         output += "crawling url : " + crawlURL + "\n";

@@ -4,10 +4,12 @@
 package com.rami3sam.crawler;
 
 import org.jsoup.Jsoup;
+import org.jsoup.UnsupportedMimeTypeException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -51,14 +53,20 @@ public class Util {
                         // deal with an empty url
                         scrapedURI = pageURI;
                     } else if (!urlWithSchemeRegexp.matcher(scrapedURL).find()) {
-                        scrapedURI = pageURI.getPath().endsWith("/") ? pageURI.resolve("../"+scrapedURL) : pageURI.resolve("./"+scrapedURL);
+                        scrapedURI = pageURI.getPath().endsWith("/") ? pageURI.resolve("../" + scrapedURL) : pageURI.resolve("./" + scrapedURL);
                     } else {
                         scrapedURI = new URI(scrapedURL);
                     }
 
-                    if (scrapedURI != null && checkForCrawlableURLScheme(scrapedURI) ) {
-                        String query =  (scrapedURI.getQuery() != null) ? scrapedURI.getQuery() : "";
-                        String url = scrapedURI.getScheme() + "://" + scrapedURI.getAuthority() + scrapedURI.getPath() + query;
+                    if (scrapedURI != null && checkForCrawlableURLScheme(scrapedURI)) {
+                        String query = (scrapedURI.getQuery() != null) ? scrapedURI.getQuery() : "";
+
+                        // Scheme and authority are converted to lowercase because they are case-insensitive
+                        String url = scrapedURI.getScheme().toLowerCase() + "://" + scrapedURI.getAuthority().toLowerCase() + scrapedURI.getPath() + query;
+                        if (url.endsWith("/")) {
+                            url = url.substring(0, url.length() - 1);
+                        }
+                        url = url.strip();
                         links.add(url);
                     }
 
@@ -76,8 +84,11 @@ public class Util {
             e.printStackTrace(System.err);
             return null;
             // handle the exception of the function not being able to start the connection
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
+        } catch (UnsupportedMimeTypeException e) {
+            //e.printStackTrace(System.err);
+            return null;
+        } catch (IOException e) {
+            //e.printStackTrace(System.err);
             return null;
         }
     }
