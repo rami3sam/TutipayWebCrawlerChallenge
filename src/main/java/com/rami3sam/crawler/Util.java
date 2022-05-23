@@ -33,49 +33,13 @@ public class Util {
             for (Element anchorTag : anchorTags) {
                 String scrapedURL = anchorTag.attr("href");
 
-                try {
-                    URI scrapedURI = null;
-                    if (scrapedURL.startsWith("//")) {
-                        // deal with absent scheme
-                        String scrapedURLWithoutSlashes = scrapedURL.replaceFirst("/+", "");
-                        scrapedURLWithoutSlashes = pageURI.getScheme() + "://" + scrapedURLWithoutSlashes;
-                        scrapedURI = new URI(scrapedURLWithoutSlashes);
-                    } else if (scrapedURL.startsWith("/")) {
-                        // deal with url relative to root
-                        scrapedURI = new URI(pageURI.getScheme(), pageURI.getAuthority(), scrapedURL, "", "");
-                    } else if (scrapedURL.startsWith("?")) {
-                        // deal with url containing only the query
-                        scrapedURI = new URI(pageURI.getScheme(), pageURI.getAuthority(), pageURI.getPath(), scrapedURL, "");
-                    } else if (scrapedURL.startsWith("#")) {
-                        // deal with url containing only a fragment
-                        scrapedURI = new URI(pageURI.getScheme(), pageURI.getAuthority(), pageURI.getPath(), "", scrapedURL);
-                    } else if (scrapedURL.equals("")) {
-                        // deal with an empty url
-                        scrapedURI = pageURI;
-                    } else if (!urlWithSchemeRegexp.matcher(scrapedURL).find()) {
-                        scrapedURI = pageURI.getPath().endsWith("/") ? pageURI.resolve("../" + scrapedURL) : pageURI.resolve("./" + scrapedURL);
-                    } else {
-                        scrapedURI = new URI(scrapedURL);
-                    }
-
-                    if (scrapedURI != null && checkForCrawlableURLScheme(scrapedURI)) {
-                        String query = (scrapedURI.getQuery() != null) ? scrapedURI.getQuery() : "";
-
-                        // Scheme and authority are converted to lowercase because they are case-insensitive
-                        String url = scrapedURI.getScheme().toLowerCase() + "://" + scrapedURI.getAuthority().toLowerCase() + scrapedURI.getPath() + query;
-                        if (url.endsWith("/")) {
-                            url = url.substring(0, url.length() - 1);
-                        }
-                        url = url.strip();
-                        links.add(url);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                String url = processURL(pageURI, scrapedURL);
+                if (url != null) {
+                    links.add(url);
                 }
 
-
             }
+
 
             return links;
 
@@ -89,6 +53,55 @@ public class Util {
             return null;
         } catch (IOException e) {
             //e.printStackTrace(System.err);
+            return null;
+        }
+    }
+
+    public static String processURL(URI pageURI, String scrapedURL) {
+        try {
+            URI scrapedURI = null;
+            if (scrapedURL.startsWith("//")) {
+                // deal with absent scheme
+                String scrapedURLWithoutSlashes = scrapedURL.replaceFirst("/+", "");
+                scrapedURLWithoutSlashes = pageURI.getScheme() + "://" + scrapedURLWithoutSlashes;
+                scrapedURI = new URI(scrapedURLWithoutSlashes);
+            } else if (scrapedURL.startsWith("/")) {
+                // deal with url relative to root
+                scrapedURI = new URI(pageURI.getScheme(), pageURI.getAuthority(), scrapedURL, "", "");
+            } else if (scrapedURL.startsWith("?")) {
+                // deal with url containing only the query
+                scrapedURI = new URI(pageURI.getScheme(), pageURI.getAuthority(), pageURI.getPath(), scrapedURL, "");
+            } else if (scrapedURL.startsWith("#")) {
+                // deal with url containing only a fragment
+                scrapedURI = new URI(pageURI.getScheme(), pageURI.getAuthority(), pageURI.getPath(), "", scrapedURL);
+            } else if (scrapedURL.equals("")) {
+                // deal with an empty url
+                scrapedURI = pageURI;
+            } else if (!urlWithSchemeRegexp.matcher(scrapedURL).find()) {
+                scrapedURI = pageURI.getPath().endsWith("/") ? pageURI.resolve("../" + scrapedURL) : pageURI.resolve("./" + scrapedURL);
+            } else {
+                scrapedURI = new URI(scrapedURL);
+            }
+
+            if (scrapedURI != null && checkForCrawlableURLScheme(scrapedURI)) {
+                String query = (scrapedURI.getQuery() != null) ? scrapedURI.getQuery() : "";
+
+                // Scheme and authority are converted to lowercase because they are case-insensitive and fragment is neglected
+                String url = scrapedURI.getScheme().toLowerCase() + "://" + scrapedURI.getAuthority().toLowerCase() + scrapedURI.getPath() + query;
+
+                // strip last / to minimize duplicates
+                if (url.endsWith("/")) {
+                    url = url.substring(0, url.length() - 1);
+                }
+                //strip it of spaces as a sanity check
+                url = url.strip();
+                return url;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

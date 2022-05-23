@@ -15,7 +15,7 @@ public class AllTests {
     @BeforeEach
     void setUp(){
         try {
-            pagePath = new URI("http://monzo.com/aaa");
+            pagePath = new URI("https://rami3sam.com/blog");
         }catch (URISyntaxException e){
 
         }
@@ -23,7 +23,17 @@ public class AllTests {
 
     @Test
     void test(){
-        assertEquals("http://monzo.com/blog",Util.rebaseIfRelativeUrl(pagePath,"blog"));
-        assertEquals("http://monzo.com/aaa/blog",Util.rebaseIfRelativeUrl(pagePath,"blog"));
+        // test for a relative to root url
+        assertEquals("https://rami3sam.com/about",Util.processURL(pagePath,"/about"));
+        // test for empty url
+        assertEquals("https://rami3sam.com/blog",Util.processURL(pagePath,""));
+        // test for scheme relative url
+        assertEquals("https://rami3sam.com/blog",Util.processURL(pagePath,"//rami3sam.com/blog"));
+        // test for full url
+        assertEquals("https://google.com",Util.processURL(pagePath,"https://google.com/"));
+        //test for only a query
+        assertEquals("https://rami3sam.com/blog?p=123",Util.processURL(pagePath,"?p=123"));
+        //test for fragment removal
+        assertEquals("https://rami3sam.com/blog",Util.processURL(pagePath,"//rami3sam.com/blog#aboutus"));
     }
 }

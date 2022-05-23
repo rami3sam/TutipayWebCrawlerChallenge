@@ -3,6 +3,7 @@
  */
 package com.rami3sam.crawler;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
@@ -15,7 +16,7 @@ public class Main {
     static String DOMAIN = "opera.com";
     static int CRAWL_LIMIT = 100;
     static volatile HashSet crawledURLs = new HashSet();
-    static volatile LinkedList<String> newURLs = new LinkedList<>();
+    static volatile ArrayList<String> newURLs = new ArrayList<>();
 
     public static void main(String[] args) throws InterruptedException {
         newURLs.add(SEED_URL);
@@ -24,12 +25,11 @@ public class Main {
         for (int i = 0; i < CRAWL_LIMIT; i++) {
             String currentURL;
 
-            while (newURLs.isEmpty()) {
-                //System.out.println(Main.newURLs);
-            }
+            // if there is no new urls in netURLS wait for a new one
+            while (newURLs.size() <= i ) {}
 
-            currentURL = newURLs.getFirst();
-            newURLs.removeFirst();
+            currentURL = newURLs.get(i);
+
 
             if (!crawledURLs.contains(currentURL)) {
                 Main.crawledURLs.add(currentURL);
