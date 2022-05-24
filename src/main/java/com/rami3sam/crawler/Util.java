@@ -50,7 +50,7 @@ public class Util {
 
             //handle the exception of the function being given a malformed url
         } catch (URISyntaxException e) {
-            e.printStackTrace(System.err);
+            //e.printStackTrace(System.err);
             return null;
             // handle the exception of the function not being able to start the connection
         } catch (UnsupportedMimeTypeException e) {
