@@ -27,8 +27,10 @@ public class Util {
             URI pageURI = new URI(pageURL);
             Document document = Jsoup.connect(pageURL).get();
 
-            Main.outputFileWriter.write(pageURL+"  -------------->  "+ document.title()+"\n");
-            Main.outputFileWriter.flush();
+            if (Main.outputFileWriter != null) {
+                Main.outputFileWriter.write(pageURL + "  -------------->  " + document.title() + "\n");
+                Main.outputFileWriter.flush();
+            }
 
             Elements anchorTags = document.getElementsByTag("a");
 
@@ -43,7 +45,6 @@ public class Util {
                 }
 
             }
-
 
             return links;
 

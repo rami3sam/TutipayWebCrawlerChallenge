@@ -11,16 +11,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class Main {
-    //static String SEED_URL = "http://localhost:8000/dir/test.html";
     static String SEED_URL = "https://monzo.com";
 
     static String DOMAIN = "opera.com";
     static int CRAWL_LIMIT = 100;
+    static boolean isLimited = false;
     static volatile HashSet crawledURLs = new HashSet();
     static volatile ArrayList<String> newURLs = new ArrayList<>();
-
     static FileWriter outputFileWriter = null;
-
     public static void main(String[] args) throws IOException {
         newURLs.add(SEED_URL);
 
@@ -28,29 +26,42 @@ public class Main {
             outputFileWriter = new FileWriter("links.txt");
         } catch (IOException e) {
             System.err.println("Couldn't open links.txt for output writing");
+            outputFileWriter.close();
+            outputFileWriter = null;
         }
 
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
-        boolean running = true;
-        for (int i = 0; running; i++) {
-            String currentURL;
 
-            currentURL = newURLs.get(i);
-
-            if (!crawledURLs.contains(currentURL)) {
-                Main.crawledURLs.add(currentURL);
-                CrawlerRunnable worker = new CrawlerRunnable(currentURL);
-                executor.execute(worker);//calling execute method of ExecutorService
+        int time = (int) System.currentTimeMillis();
+        for (int i = 0; true; ) {
+            // check CRAWL_LIMIT if the crawling is limited
+            if (isLimited == true && (i > CRAWL_LIMIT)){
+                break;
             }
 
-            // if there is no new urls in netURLS wait for a new one
-            int time = (int) System.currentTimeMillis();
-            while (newURLs.size() <= i + 1) {
-                if ((int) System.currentTimeMillis() - time >= 30000) {
-                    running = false;
+            String currentURL;
+            // check for the existence of a new url in the queue
+            if (newURLs.size() > i) {
+                currentURL = newURLs.get(i);
+
+                //check to ensure you didn't crawl it before
+                if (!crawledURLs.contains(currentURL)) {
+                    Main.crawledURLs.add(currentURL);
+                    CrawlerRunnable worker = new CrawlerRunnable(currentURL);
+                    executor.execute(worker);//calling execute method of ExecutorService
+                }
+                i++;
+
+                time = (int) System.currentTimeMillis();
+            }
+
+            // if the program is idle for 10 seconds then exit
+            if (newURLs.size() == i ) {
+                if ((int) System.currentTimeMillis() - time >= 10000) {
                     break;
                 }
             }
+
         }
         System.out.println("Closing ThreadPoolExecutor");
         executor.shutdown();
@@ -59,7 +70,10 @@ public class Main {
 
         }
 
-        outputFileWriter.close();
+        if (outputFileWriter != null) {
+            outputFileWriter.close();
+        }
+
         System.out.println("************\n");
 
     }
