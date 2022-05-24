@@ -32,7 +32,6 @@ public class Main {
 
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
 
-        int time = (int) System.currentTimeMillis();
         for (int i = 0; true; ) {
             // check CRAWL_LIMIT if the crawling is limited
             if (isLimited == true && (i > CRAWL_LIMIT)){
@@ -52,15 +51,10 @@ public class Main {
                 }
                 i++;
 
-                time = (int) System.currentTimeMillis();
+
             }
 
-            // if the program is idle for 10 seconds then exit
-            if (newURLs.size() == i ) {
-                if ((int) System.currentTimeMillis() - time >= 10000) {
-                    break;
-                }
-            }
+
 
         }
         System.out.println("Closing ThreadPoolExecutor");
