@@ -42,7 +42,8 @@ public class AllTests {
         testCases.add(new URLTest("https://rami3sam.com/blog", URI1, "//rami3sam.com/blog#aboutus"));
         //testing for relative url and the current page ends with a slash
         testCases.add(new URLTest("https://google.com/a/b/c/d", URI2, "d"));
-
+        // test for / meaning root of the website
+        testCases.add(new URLTest("https://rami3sam.com", URI1, "/"));
         for (URLTest testCase : testCases) {
             assertEquals(testCase.getExpected(), Util.processURL(testCase.getPageURI(), testCase.getURL()), "Failed on case: " + testCase.expected);
         }
