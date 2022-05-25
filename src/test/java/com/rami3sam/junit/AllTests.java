@@ -22,7 +22,7 @@ public class AllTests {
             URI1 = new URI("https://rami3sam.com/blog");
             URI2 = new URI("https://google.com/a/b/c/");
         } catch (URISyntaxException e) {
-            System.err.println("Failed to create URI Object for tests");
+            fail("Failed to create URI Object for tests");
             return;
         }
 
@@ -44,7 +44,7 @@ public class AllTests {
         testCases.add(new URLTest("https://google.com/a/b/c/d", URI2, "d"));
 
         for (URLTest testCase : testCases) {
-            assertEquals(testCase.expected, Util.processURL(testCase.pageURI, testCase.URL), "Failed on case: " + testCase.expected);
+            assertEquals(testCase.getExpected(), Util.processURL(testCase.getPageURI(), testCase.getURL()), "Failed on case: " + testCase.expected);
         }
 
     }
@@ -65,9 +65,21 @@ public class AllTests {
     }
 
     private class URLTest {
-        String expected;
-        String URL;
-        URI pageURI;
+        private final String expected;
+        private final String URL;
+        private final URI pageURI;
+
+        public String getExpected() {
+            return expected;
+        }
+
+        public String getURL() {
+            return URL;
+        }
+
+        public URI getPageURI() {
+            return pageURI;
+        }
 
         public URLTest(String expected, URI pageURI, String URL) {
             this.expected = expected;
